@@ -1,0 +1,12 @@
+[package]
+name = "rag"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+langchain-rust = {version ="4.6.0", features = ["postgres", "ollama", "pdf-extract"]}
+serde_json = "1.0.133"
+tokio="1.41.1"
+futures-util = "0.3.31"
+unicode-segmentation = "1.12.0"
+futures = "0.3.31"

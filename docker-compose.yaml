@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: rag-db
+    build: 
+      context: ./.docker/postgres
+      dockerfile: Dockerfile
+    ports:
+      - "5432:5432"
+    # networks:
+    #   - omnichannel-dev-services
+    volumes:
+      - .docker/pgdata:/var/lib/postgresql/data/pgdata
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      POSTGRES_PASSWORD: "123456"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "postgres"
+      PGDATA: /var/lib/postgresql/data/pgdata
+
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+
+volumes:
+  ollama:
