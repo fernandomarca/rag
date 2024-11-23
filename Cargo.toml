@@ -2,6 +2,12 @@
 name = "rag"
 version = "0.1.0"
 edition = "2021"
+default-run = "rag"
+
+[[bin]]
+name = "rag"
+path = "src/main.rs"
+default = true
 
 [[bin]]
 name = "db-rag"

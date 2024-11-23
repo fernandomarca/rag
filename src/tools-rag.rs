@@ -57,7 +57,7 @@ async fn main() {
         .options(
             ChainCallOptions::new()
                 .with_temperature(0.0)
-                .with_max_tokens(3000),
+                .with_max_tokens(1000),
         )
         .build(llm)
         .unwrap();
