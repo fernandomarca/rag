@@ -3,6 +3,7 @@ use langchain_rust::add_documents;
 use langchain_rust::chain::Chain;
 use langchain_rust::chain::ConversationalRetrieverChainBuilder;
 use langchain_rust::document_loaders::pdf_extract_loader::PdfExtractLoader;
+use langchain_rust::document_loaders::HtmlLoader;
 use langchain_rust::document_loaders::Loader;
 use langchain_rust::embedding::ollama_embedder::OllamaEmbedder;
 use langchain_rust::embedding::Embedder;
@@ -16,6 +17,7 @@ use langchain_rust::prompt::HumanMessagePromptTemplate;
 use langchain_rust::prompt_args;
 use langchain_rust::schemas::Message;
 use langchain_rust::template_jinja2;
+use langchain_rust::url::Url;
 use langchain_rust::vectorstore::pgvector::StoreBuilder;
 use langchain_rust::vectorstore::Retriever;
 use langchain_rust::vectorstore::VecStoreOptions;
@@ -23,33 +25,34 @@ use langchain_rust::vectorstore::VectorStore;
 
 #[tokio::main]
 async fn main() {
-    // let path = "./src/fossa.pdf";
+    let path = "./src/fmm.html";
+    let html_loader =
+        HtmlLoader::from_path(path, Url::parse("https://fmmagalhaes.com.br/").unwrap())
+            .expect("Failed to create html loader");
 
-    // let loader = PdfExtractLoader::from_path(path).expect("Failed to create PdfExtractLoader");
-
-    // let documents = loader
-    //     .load()
-    //     .await
-    //     .unwrap()
-    //     .map(|d| d.unwrap())
-    //     .collect::<Vec<_>>()
-    //     .await;
+    let documents = html_loader
+        .load()
+        .await
+        .unwrap()
+        .map(|d| d.unwrap())
+        .collect::<Vec<_>>()
+        .await;
 
     let ollama = OllamaEmbedder::default().with_model("llama3.2");
 
     let store = StoreBuilder::new()
         .embedder(ollama)
         .vstore_options(VecStoreOptions::default())
-        .collection_name("fossa")
+        .collection_name("fmm")
         .vector_dimensions(3072)
         .connection_url("postgresql://postgres:123456@localhost:5432/postgres")
         .build()
         .await
         .unwrap();
 
-    // let _ = add_documents!(store, &documents).await.map_err(|e| {
-    //     println!("Error adding documents: {:?}", e);
-    // });
+    let _ = add_documents!(store, &documents).await.map_err(|e| {
+        println!("Error adding documents: {:?}", e);
+    });
 
     let options = GenerationOptions::default().temperature(0.0).num_thread(8);
 
@@ -82,7 +85,7 @@ async fn main() {
         .expect("Error building ConversationalChain");
 
     let input_variables = prompt_args! {
-        "question" => "Qual as principais recomendações para construir uma fossa?",
+        "question" => "quanto tempo existe a empresa FMM e qual o diferencial dela?",
     };
 
     let mut stream = chain.stream(input_variables).await.unwrap();

@@ -3,6 +3,22 @@ name = "rag"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "db-rag"
+path = "src/db-rag.rs"
+
+[[bin]]
+name = "tools-rag"
+path = "src/tools-rag.rs"
+
+[[bin]]
+name = "math"
+path = "src/math.rs"
+
+[[bin]]
+name = "html"
+path = "src/html.rs"
+
 [dependencies]
 langchain-rust = {version ="4.6.0", features = ["postgres", "ollama", "pdf-extract"]}
 serde_json = "1.0.133"
@@ -10,3 +26,5 @@ tokio="1.41.1"
 futures-util = "0.3.31"
 unicode-segmentation = "1.12.0"
 futures = "0.3.31"
+async-trait = "0.1.83"
+chrono = "0.4.38"
