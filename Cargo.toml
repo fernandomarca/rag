@@ -34,3 +34,4 @@ unicode-segmentation = "1.12.0"
 futures = "0.3.31"
 async-trait = "0.1.83"
 chrono = "0.4.38"
+text-splitter = { version = "0.18.1", features = ["tiktoken-rs", "markdown"] }

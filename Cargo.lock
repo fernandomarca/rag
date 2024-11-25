@@ -770,6 +770,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "fancy-regex"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "531e46835a22af56d1e3b66f04844bed63158bc094a628bec1d321d9b4c44bf2"
+dependencies = [
+ "bit-set",
+ "regex-automata",
+ "regex-syntax",
+]
+
+[[package]]
 name = "fastrand"
 version = "2.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1567,9 +1578,9 @@ dependencies = [
  "serde_json",
  "sqlx",
  "strum_macros",
- "text-splitter",
+ "text-splitter 0.16.1",
  "thiserror 1.0.69",
- "tiktoken-rs",
+ "tiktoken-rs 0.5.9",
  "tokio",
  "tokio-stream",
  "url",
@@ -2335,6 +2346,7 @@ dependencies = [
  "futures-util",
  "langchain-rust",
  "serde_json",
+ "text-splitter 0.18.1",
  "tokio",
  "unicode-segmentation",
 ]
@@ -3366,7 +3378,26 @@ dependencies = [
  "regex",
  "strum",
  "thiserror 1.0.69",
- "tiktoken-rs",
+ "tiktoken-rs 0.5.9",
+ "unicode-segmentation",
+]
+
+[[package]]
+name = "text-splitter"
+version = "0.18.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "189450e9eaff1a8037cca4d60ca62c134a7e601187430bdd487c86e25e8d6641"
+dependencies = [
+ "ahash",
+ "auto_enums",
+ "either",
+ "itertools",
+ "once_cell",
+ "pulldown-cmark",
+ "regex",
+ "strum",
+ "thiserror 1.0.69",
+ "tiktoken-rs 0.6.0",
  "unicode-segmentation",
 ]
 
@@ -3419,9 +3450,25 @@ dependencies = [
  "anyhow",
  "base64 0.21.7",
  "bstr",
- "fancy-regex",
+ "fancy-regex 0.12.0",
  "lazy_static",
  "parking_lot",
+ "rustc-hash 1.1.0",
+]
+
+[[package]]
+name = "tiktoken-rs"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "44075987ee2486402f0808505dd65692163d243a337fc54363d49afac41087f6"
+dependencies = [
+ "anyhow",
+ "base64 0.21.7",
+ "bstr",
+ "fancy-regex 0.13.0",
+ "lazy_static",
+ "parking_lot",
+ "regex",
  "rustc-hash 1.1.0",
 ]
 
